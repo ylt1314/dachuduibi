@@ -279,7 +279,7 @@
       <!-- Quick Metrics Badge info -->
       <div class="flex items-center gap-2 text-xs text-slate-500 self-end mb-1">
         <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 text-slate-600 font-medium">
-          <i class="fa-solid fa-filter text-blue-600"></i> 当前切片筛选中: <b id="statStoreCount" class="text-blue-600 font-bold">0</b> 家店铺 / <b id="statBrandCount" class="text-purple-600 font-bold">0</b> 个品牌 / <b id="statProductCount" class="text-emerald-600 font-bold">0</b> 件爆品
+          <i class="fa-solid fa-filter text-blue-600"></i> 当前切片筛选中: <b id="statStoreCount" class="text-blue-600 font-bold">0</b> 家店铺 / <b id="statProductCount" class="text-emerald-600 font-bold">0</b> 件爆品
         </span>
       </div>
     </div>
@@ -289,11 +289,7 @@
   <div class="bg-white border-b border-slate-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <nav class="flex space-x-2 sm:space-x-8 overflow-x-auto" aria-label="Tabs">
-        <button id="tabBtnModule4" class="tab-button tab-active whitespace-nowrap py-3.5 px-3 border-b-2 font-bold text-sm flex items-center gap-2 transition-all">
-          <i class="fa-solid fa-tags"></i>
-          模块四：品牌大促全景分析
-        </button>
-        <button id="tabBtnModule1" class="tab-button whitespace-nowrap py-3.5 px-3 border-b-2 border-transparent font-medium text-slate-500 hover:text-slate-800 text-sm flex items-center gap-2 transition-all">
+        <button id="tabBtnModule1" class="tab-button tab-active whitespace-nowrap py-3.5 px-3 border-b-2 font-bold text-sm flex items-center gap-2 transition-all">
           <i class="fa-solid fa-store"></i>
           模块一：行业大盘对比与店铺全景
         </button>
@@ -388,209 +384,9 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- TAB CONTENT: MODULE 4 (品牌大促表现全景 - 品牌优先) -->
-    <!-- ========================================== -->
-    <div id="contentModule4" class="tab-content space-y-6">
-      
-      <!-- Table 1: Cross-Industry Brand Benchmark (Ignores External Industry Filter Slice, Centered, PDF Export) -->
-      <div id="m4IndustryPdfContainer" class="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
-        <div class="p-5 border-b border-slate-200 flex flex-wrap items-center justify-between gap-4 bg-gradient-to-r from-purple-50/50 via-white to-white">
-          <div>
-            <div class="flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-purple-600 inline-block"></span>
-              <h3 class="text-base font-bold text-slate-900">
-                不同行业品牌大盘对比与表现概览
-              </h3>
-              <span class="text-xs px-2 py-0.5 rounded-full bg-purple-100 text-purple-700 font-semibold border border-purple-200">
-                忽略外部行业切片 · 全行业品牌基准
-              </span>
-            </div>
-            <p class="text-xs text-slate-500 mt-1">
-              呈现所载入数据中所有行业品牌的本期/同期销额(亿元)、销量(万件)、件单价(元)及同比变动（增长蓝/下滑红），所有数值居中展示。
-            </p>
-          </div>
-
-          <div class="flex items-center gap-2">
-            <button id="m4ExportIndustryPdfBtn" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-purple-600 hover:bg-purple-700 rounded-lg shadow-xs transition-colors">
-              <i class="fa-solid fa-file-pdf"></i>
-              导出行业品牌大盘表 (PDF)
-            </button>
-            <button id="m4ExportIndustryCsvBtn" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 rounded-lg border border-slate-200 shadow-2xs transition-colors">
-              <i class="fa-solid fa-file-excel text-emerald-600"></i>
-              导出 CSV
-            </button>
-          </div>
-        </div>
-
-        <!-- Table Container: All values centered -->
-        <div class="overflow-x-auto custom-scrollbar">
-          <table class="w-full text-center text-xs whitespace-nowrap" id="brandBenchmarkTable">
-            <thead class="bg-slate-50/90 text-slate-600 font-semibold border-b border-slate-200 select-none">
-              <tr>
-                <th class="py-3.5 px-4 font-bold text-left">所属行业</th>
-                <th class="py-3.5 px-3 font-semibold">品牌数</th>
-                <!-- Sales in 亿元 -->
-                <th data-sort-ind="currSalesYi" class="py-3.5 px-3 cursor-pointer hover:bg-slate-100 bg-blue-50/40 text-blue-950 font-bold transition-colors">
-                  <div class="flex items-center justify-center gap-1">本期销额(亿元) <i class="fa-solid fa-sort text-slate-300 text-[10px]"></i></div>
-                </th>
-                <th data-sort-ind="prevSalesYi" class="py-3.5 px-3 cursor-pointer hover:bg-slate-100 transition-colors">
-                  <div class="flex items-center justify-center gap-1">同期销额(亿元) <i class="fa-solid fa-sort text-slate-300 text-[10px]"></i></div>
-                </th>
-                <th data-sort-ind="salesYoY" class="py-3.5 px-3 cursor-pointer hover:bg-slate-100 transition-colors">
-                  <div class="flex items-center justify-center gap-1">销额同比(%) <i class="fa-solid fa-sort text-slate-300 text-[10px]"></i></div>
-                </th>
-                <!-- Volume in 万件 -->
-                <th data-sort-ind="currVolumeWan" class="py-3.5 px-3 cursor-pointer hover:bg-slate-100 bg-emerald-50/40 text-emerald-950 font-bold transition-colors">
-                  <div class="flex items-center justify-center gap-1">本期销量(万件) <i class="fa-solid fa-sort text-slate-300 text-[10px]"></i></div>
-                </th>
-                <th data-sort-ind="prevVolumeWan" class="py-3.5 px-3 cursor-pointer hover:bg-slate-100 transition-colors">
-                  <div class="flex items-center justify-center gap-1">同期销量(万件) <i class="fa-solid fa-sort text-slate-300 text-[10px]"></i></div>
-                </th>
-                <th data-sort-ind="volumeYoY" class="py-3.5 px-3 cursor-pointer hover:bg-slate-100 transition-colors">
-                  <div class="flex items-center justify-center gap-1">销量同比(%) <i class="fa-solid fa-sort text-slate-300 text-[10px]"></i></div>
-                </th>
-                <!-- ASP in 元 -->
-                <th data-sort-ind="currAsp" class="py-3.5 px-3 cursor-pointer hover:bg-slate-100 bg-amber-50/40 text-amber-950 font-bold transition-colors">
-                  <div class="flex items-center justify-center gap-1">本期件单价(元) <i class="fa-solid fa-sort text-slate-300 text-[10px]"></i></div>
-                </th>
-                <th data-sort-ind="prevAsp" class="py-3.5 px-3 cursor-pointer hover:bg-slate-100 transition-colors">
-                  <div class="flex items-center justify-center gap-1">同期件单价(元) <i class="fa-solid fa-sort text-slate-300 text-[10px]"></i></div>
-                </th>
-                <th data-sort-ind="aspYoY" class="py-3.5 px-3 cursor-pointer hover:bg-slate-100 transition-colors">
-                  <div class="flex items-center justify-center gap-1">件单价同比(%) <i class="fa-solid fa-sort text-slate-300 text-[10px]"></i></div>
-                </th>
-              </tr>
-            </thead>
-            <tbody id="brandBenchmarkTableBody" class="divide-y divide-slate-100 text-slate-700">
-              <!-- Rendered via JS -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Brand Competitive Detail Table: "品牌大促表现" -->
-      <div id="m4BrandPdfContainer" class="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
-        <!-- Table Toolbar -->
-        <div class="p-5 border-b border-slate-200 flex flex-wrap items-center justify-between gap-4">
-          <div>
-            <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
-              <i class="fa-solid fa-tags text-purple-600"></i>
-              品牌大促表现
-            </h3>
-            <p class="text-xs text-slate-500 mt-1">展示品牌本期销额(万元)、本期销量(万件)、件单价及排名位次变化（数值居中显示），支持导出 PDF / CSV</p>
-          </div>
-          
-          <div class="flex flex-wrap items-center gap-3">
-            <!-- Linked Local Industry Filter for Brand Module -->
-            <div class="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1 text-xs">
-              <span class="text-slate-500 font-semibold flex items-center gap-1">
-                <i class="fa-solid fa-filter text-purple-600 text-[11px]"></i> 所属行业:
-              </span>
-              <select id="m4LocalIndustrySelect" class="bg-transparent text-slate-800 font-bold focus:outline-none cursor-pointer">
-              </select>
-            </div>
-
-            <!-- Search -->
-            <div class="relative min-w-[160px]">
-              <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-xs text-slate-400"></i>
-              <input type="text" id="m4SearchInput" placeholder="搜索名牌/品牌名称..." class="w-full bg-slate-50 hover:bg-slate-100/80 focus:bg-white border border-slate-200 pl-8 pr-3 py-1.5 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all">
-            </div>
-
-            <!-- Quick Filter Tabs -->
-            <div class="flex items-center bg-slate-100 p-1 rounded-xl text-xs font-medium text-slate-600" id="m4QuickFilters">
-              <button data-filter="all" class="m4-filter active px-2.5 py-1 rounded-lg bg-white text-purple-700 shadow-xs font-semibold">全部</button>
-              <button data-filter="top10" class="m4-filter px-2.5 py-1 rounded-lg hover:text-slate-900">TOP 10</button>
-              <button data-filter="up" class="m4-filter px-2.5 py-1 rounded-lg hover:text-slate-900">排名上升</button>
-              <button data-filter="new" class="m4-filter px-2.5 py-1 rounded-lg hover:text-slate-900">新上榜</button>
-            </div>
-
-            <!-- Export Buttons: PDF and CSV -->
-            <button id="m4ExportBrandPdfBtn" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-purple-600 hover:bg-purple-700 rounded-lg shadow-xs transition-colors">
-              <i class="fa-solid fa-file-pdf"></i>
-              导出品牌表 (PDF)
-            </button>
-            <button id="m4ExportBrandCsvBtn" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg border border-slate-200 transition-colors">
-              <i class="fa-solid fa-file-excel text-emerald-600"></i>
-              导出 CSV
-            </button>
-          </div>
-        </div>
-
-        <!-- Table Data: Centered numbers -->
-        <div class="overflow-x-auto custom-scrollbar">
-          <table class="w-full text-center text-xs whitespace-nowrap" id="brandTable">
-            <thead class="bg-slate-50/80 text-slate-600 font-semibold border-b border-slate-200 select-none">
-              <tr>
-                <th data-sort="currRank" class="py-3 px-3 cursor-pointer hover:bg-slate-100 transition-colors">
-                  <div class="flex items-center justify-center gap-1">本期排名 <i class="fa-solid fa-sort text-slate-300 text-[10px]"></i></div>
-                </th>
-                <th data-sort="rankChange" class="py-3 px-3 cursor-pointer hover:bg-slate-100 transition-colors">
-                  <div class="flex items-center justify-center gap-1">排名升降 <i class="fa-solid fa-sort text-slate-300 text-[10px]"></i></div>
-                </th>
-                <th class="py-3 px-4 font-bold text-left">品牌名称</th>
-                
-                <!-- GMV (万元) & YoY -->
-                <th data-sort="currSalesWan" class="py-3 px-3 cursor-pointer hover:bg-slate-100 transition-colors bg-blue-50/40">
-                  <div class="flex items-center justify-center gap-1 text-blue-950 font-bold">本期销额(万元) <i class="fa-solid fa-sort text-slate-300 text-[10px]"></i></div>
-                </th>
-                <th data-sort="salesYoY" class="py-3 px-3 cursor-pointer hover:bg-slate-100 transition-colors">
-                  <div class="flex items-center justify-center gap-1">销额同比 <i class="fa-solid fa-sort text-slate-300 text-[10px]"></i></div>
-                </th>
-
-                <!-- Volume (万件) & YoY -->
-                <th data-sort="currVolumeWan" class="py-3 px-3 cursor-pointer hover:bg-slate-100 transition-colors bg-emerald-50/40">
-                  <div class="flex items-center justify-center gap-1 text-emerald-950 font-bold">本期销量(万件) <i class="fa-solid fa-sort text-slate-300 text-[10px]"></i></div>
-                </th>
-                <th data-sort="volumeYoY" class="py-3 px-3 cursor-pointer hover:bg-slate-100 transition-colors">
-                  <div class="flex items-center justify-center gap-1">销量同比 <i class="fa-solid fa-sort text-slate-300 text-[10px]"></i></div>
-                </th>
-
-                <!-- ASP in 元 -->
-                <th data-sort="currPrice" class="py-3 px-3 cursor-pointer hover:bg-slate-100 transition-colors bg-amber-50/40">
-                  <div class="flex items-center justify-center gap-1 text-amber-950 font-bold">本期件单价(元) <i class="fa-solid fa-sort text-slate-300 text-[10px]"></i></div>
-                </th>
-                <th data-sort="prevPrice" class="py-3 px-3 cursor-pointer hover:bg-slate-100 transition-colors">
-                  <div class="flex items-center justify-center gap-1">同期件单价(元) <i class="fa-solid fa-sort text-slate-300 text-[10px]"></i></div>
-                </th>
-                <th data-sort="priceYoY" class="py-3 px-3 cursor-pointer hover:bg-slate-100 transition-colors">
-                  <div class="flex items-center justify-center gap-1">件单价同比 <i class="fa-solid fa-sort text-slate-300 text-[10px]"></i></div>
-                </th>
-                <th data-sort="prevRank" class="py-3 px-3 cursor-pointer hover:bg-slate-100 transition-colors">
-                  <div class="flex items-center justify-center gap-1">同期排名 <i class="fa-solid fa-sort text-slate-300 text-[10px]"></i></div>
-                </th>
-              </tr>
-            </thead>
-            <tbody id="brandTableBody" class="divide-y divide-slate-100 text-slate-700">
-              <!-- Rendered via JS -->
-            </tbody>
-          </table>
-        </div>
-
-        <!-- Pagination -->
-        <div class="p-4 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500">
-          <div class="flex items-center gap-2">
-            <span>每页:</span>
-            <select id="m4PageSizeSelect" class="bg-slate-50 border border-slate-200 text-slate-700 text-xs rounded-lg px-2 py-1 focus:ring-1 focus:ring-purple-500 cursor-pointer">
-              <option value="10">10 条</option>
-              <option value="20" selected>20 条</option>
-              <option value="50">50 条</option>
-            </select>
-            <span id="m4PageInfoText">第 1 / 1 页</span>
-          </div>
-          <div class="flex items-center gap-1" id="m4PaginationBtns">
-            <button id="m4PrevPageBtn" class="px-2.5 py-1 rounded-md border border-slate-200 hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed">上一页</button>
-            <div id="m4PageNumbers" class="flex items-center gap-1"></div>
-            <button id="m4NextPageBtn" class="px-2.5 py-1 rounded-md border border-slate-200 hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed">下一页</button>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- ========================================== -->
     <!-- TAB CONTENT: MODULE 1 (行业大盘与店铺全景) -->
     <!-- ========================================== -->
-    <div id="contentModule1" class="tab-content hidden space-y-6">
+    <div id="contentModule1" class="tab-content space-y-6">
       
       <!-- Table 1: Cross-Industry Benchmark (Ignores External Industry Filter Slice, Centered, PDF Export) -->
       <div id="m1IndustryPdfContainer" class="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
@@ -1059,7 +855,6 @@
         <div class="text-[11px] space-y-1 text-slate-500">
           <p><b>1. 店铺表：</b>所属行业、店铺名称、本期销量、本期估算销售额(元)、年份</p>
           <p><b>2. 单品表：</b>商品ID、商品标题、商品主图链接、商品类目、商品链接、所属行业、店铺名称、本期销量、本期估算销售额（元）、品牌、货号/款号、年份季节、年份</p>
-          <p><b>3. 品牌表：</b>所属行业、品牌名称（或名牌名称）、本期销量、本期估算销售额(元)、年份</p>
         </div>
       </div>
 
@@ -1140,27 +935,6 @@
         "年份季节": "2026秋冬",
         "年份": 2026
       }
-    ];
-
-    const DEMO_BRAND_DATA = [
-      { "所属行业": "女装/女士精品", "品牌名称": "优衣库", "本期销量": 1200000, "本期估算销售额(元)": 210000000, "年份": 2026 },
-      { "所属行业": "女装/女士精品", "品牌名称": "波司登", "本期销量": 105000,  "本期估算销售额(元)": 140000000, "年份": 2026 },
-      { "所属行业": "女装/女士精品", "品牌名称": "雪中飞", "本期销量": 480000,  "本期估算销售额(元)": 112000000, "年份": 2026 },
-      { "所属行业": "女装/女士精品", "品牌名称": "之禾",   "本期销量": 31000,   "本期估算销售额(元)": 98000000,  "年份": 2026 },
-      { "所属行业": "女装/女士精品", "品牌名称": "优衣库", "本期销量": 1150000, "本期估算销售额(元)": 240000000, "年份": 2025 },
-      { "所属行业": "女装/女士精品", "品牌名称": "波司登", "本期销量": 160000,  "本期估算销售额(元)": 150000000, "年份": 2025 },
-      { "所属行业": "女装/女士精品", "品牌名称": "雪中飞", "本期销量": 500000,  "本期估算销售额(元)": 105000000, "年份": 2025 },
-      { "所属行业": "女装/女士精品", "品牌名称": "之禾",   "本期销量": 10000,   "本期估算销售额(元)": 30000000,  "年份": 2025 },
-
-      { "所属行业": "运动服/休闲服装", "品牌名称": "FILA/斐乐", "本期销量": 510000, "本期估算销售额(元)": 315000000, "年份": 2026 },
-      { "所属行业": "运动服/休闲服装", "品牌名称": "DESCENTE/迪桑特", "本期销量": 158000, "本期估算销售额(元)": 272000000, "年份": 2026 },
-      { "所属行业": "运动服/休闲服装", "品牌名称": "FILA/斐乐", "本期销量": 480000, "本期估算销售额(元)": 295000000, "年份": 2025 },
-      { "所属行业": "运动服/休闲服装", "品牌名称": "DESCENTE/迪桑特", "本期销量": 140000, "本期估算销售额(元)": 242000000, "年份": 2025 },
-
-      { "所属行业": "户外服装", "品牌名称": "The North Face/北面", "本期销量": 89000,  "本期估算销售额(元)": 118000000, "年份": 2026 },
-      { "所属行业": "户外服装", "品牌名称": "伯希和",              "本期销量": 172000, "本期估算销售额(元)": 103000000, "年份": 2026 },
-      { "所属行业": "户外服装", "品牌名称": "The North Face/北面", "本期销量": 82000,  "本期估算销售额(元)": 108000000, "年份": 2025 },
-      { "所属行业": "户外服装", "品牌名称": "伯希和",              "本期销量": 155000, "本期估算销售额(元)": 93000000,  "年份": 2025 }
     ];
 
     /**
@@ -1372,83 +1146,6 @@
       }
     ];
 
-    const REAL_BRAND_DATA = [
-      // === 女装/女士精品 (2026) ===
-      { "所属行业": "女装/女士精品", "品牌名称": "优衣库",   "本期销量": 1328739, "本期估算销售额(元)": 218217300, "年份": 2026 },
-      { "所属行业": "女装/女士精品", "品牌名称": "波司登",   "本期销量": 112014,  "本期估算销售额(元)": 144273600, "年份": 2026 },
-      { "所属行业": "女装/女士精品", "品牌名称": "雪中飞",   "本期销量": 496763,  "本期估算销售额(元)": 116678500, "年份": 2026 },
-      { "所属行业": "女装/女士精品", "品牌名称": "ICICLE之禾", "本期销量": 32424, "本期估算销售额(元)": 101108700, "年份": 2026 },
-      { "所属行业": "女装/女士精品", "品牌名称": "MO&Co.",  "本期销量": 107013,  "本期估算销售额(元)": 91605400,  "年份": 2026 },
-      { "所属行业": "女装/女士精品", "品牌名称": "UR",      "本期销量": 323803,  "本期估算销售额(元)": 72327070,  "年份": 2026 },
-      { "所属行业": "女装/女士精品", "品牌名称": "高梵",     "本期销量": 42170,   "本期估算销售额(元)": 71003070,  "年份": 2026 },
-      { "所属行业": "女装/女士精品", "品牌名称": "COS",     "本期销量": 93685,   "本期估算销售额(元)": 70617930,  "年份": 2026 },
-      { "所属行业": "女装/女士精品", "品牌名称": "朗姿",     "本期销量": 51740,   "本期估算销售额(元)": 68009270,  "年份": 2026 },
-      { "所属行业": "女装/女士精品", "品牌名称": "致知ZHIZHI", "本期销量": 45000, "本期估算销售额(元)": 52800000,  "年份": 2026 },
-      { "所属行业": "女装/女士精品", "品牌名称": "伊芙丽",   "本期销量": 89000,   "本期估算销售额(元)": 51519580,  "年份": 2026 },
-
-      // === 女装/女士精品 (2025) ===
-      { "所属行业": "女装/女士精品", "品牌名称": "优衣库",   "本期销量": 1230448, "本期估算销售额(元)": 251995400, "年份": 2025 },
-      { "所属行业": "女装/女士精品", "品牌名称": "波司登",   "本期销量": 168729,  "本期估算销售额(元)": 154291500, "年份": 2025 },
-      { "所属行业": "女装/女士精品", "品牌名称": "雪中飞",   "本期销量": 521936,  "本期估算销售额(元)": 108422000, "年份": 2025 },
-      { "所属行业": "女装/女士精品", "品牌名称": "MO&Co.",  "本期销量": 125797,  "本期估算销售额(元)": 107680700, "年份": 2025 },
-      { "所属行业": "女装/女士精品", "品牌名称": "高梵",     "本期销量": 53450,   "本期估算销售额(元)": 90929740,  "年份": 2025 },
-      { "所属行业": "女装/女士精品", "品牌名称": "UR",      "本期销量": 356490,  "本期估算销售额(元)": 81672650,  "年份": 2025 },
-      { "所属行业": "女装/女士精品", "品牌名称": "伊芙丽",   "本期销量": 118600,  "本期估算销售额(元)": 70575320,  "年份": 2025 },
-      { "所属行业": "女装/女士精品", "品牌名称": "COS",     "本期销量": 78200,   "本期估算销售额(元)": 58930430,  "年份": 2025 },
-      { "所属行业": "女装/女士精品", "品牌名称": "朗姿",     "本期销量": 40690,   "本期估算销售额(元)": 53468990,  "年份": 2025 },
-      { "所属行业": "女装/女士精品", "品牌名称": "ICICLE之禾", "本期销量": 10160, "本期估算销售额(元)": 31690300,  "年份": 2025 },
-
-      // === 运动服/休闲服装 (2026) ===
-      { "所属行业": "运动服/休闲服装", "品牌名称": "FILA/斐乐", "本期销量": 525861, "本期估算销售额(元)": 323675000, "年份": 2026 },
-      { "所属行业": "运动服/休闲服装", "品牌名称": "DESCENTE/迪桑特", "本期销量": 163643, "本期估算销售额(元)": 281763000, "年份": 2026 },
-      { "所属行业": "运动服/休闲服装", "品牌名称": "adidas/阿迪达斯", "本期销量": 357637, "本期估算销售额(元)": 161261000, "年份": 2026 },
-      { "所属行业": "运动服/休闲服装", "品牌名称": "李宁",     "本期销量": 420000, "本期估算销售额(元)": 142800000, "年份": 2026 },
-      { "所属行业": "运动服/休闲服装", "品牌名称": "安踏",     "本期销量": 580000, "本期估算销售额(元)": 139200000, "年份": 2026 },
-
-      // === 运动服/休闲服装 (2025) ===
-      { "所属行业": "运动服/休闲服装", "品牌名称": "FILA/斐乐", "本期销量": 495000, "本期估算销售额(元)": 304770000, "年份": 2025 },
-      { "所属行业": "运动服/休闲服装", "品牌名称": "DESCENTE/迪桑特", "本期销量": 147000, "本期估算销售额(元)": 253600000, "年份": 2025 },
-      { "所属行业": "运动服/休闲服装", "品牌名称": "adidas/阿迪达斯", "本期销量": 258000, "本期估算销售额(元)": 116400000, "年份": 2025 },
-      { "所属行业": "运动服/休闲服装", "品牌名称": "安踏",     "本期销量": 510000, "本期估算销售额(元)": 127500000, "年份": 2025 },
-      { "所属行业": "运动服/休闲服装", "品牌名称": "李宁",     "本期销量": 410000, "本期估算销售额(元)": 135300000, "年份": 2025 },
-
-      // === 户外服装 (2026) ===
-      { "所属行业": "户外服装", "品牌名称": "The North Face/北面", "本期销量": 91693,  "本期估算销售额(元)": 121043000, "年份": 2026 },
-      { "所属行业": "户外服装", "品牌名称": "伯希和",             "本期销量": 178975, "本期估算销售额(元)": 107305000, "年份": 2026 },
-      { "所属行业": "户外服装", "品牌名称": "骆驼",               "本期销量": 231764, "本期估算销售额(元)": 101914000, "年份": 2026 },
-      { "所属行业": "户外服装", "品牌名称": "始祖鸟",             "本期销量": 21000,  "本期估算销售额(元)": 94500000,  "年份": 2026 },
-      { "所属行业": "户外服装", "品牌名称": "Columbia/哥伦比亚",   "本期销量": 78000,  "本期估算销售额(元)": 62400000,  "年份": 2026 },
-
-      // === 户外服装 (2025) ===
-      { "所属行业": "户外服装", "品牌名称": "The North Face/北面", "本期销量": 84200,  "本期估算销售额(元)": 111250000, "年份": 2025 },
-      { "所属行业": "户外服装", "品牌名称": "骆驼",               "本期销量": 413000, "本期估算销售额(元)": 181600000, "年份": 2025 },
-      { "所属行业": "户外服装", "品牌名称": "伯希和",             "本期销量": 162000, "本期估算销售额(元)": 97100000,  "年份": 2025 },
-      { "所属行业": "户外服装", "品牌名称": "始祖鸟",             "本期销量": 16000,  "本期估算销售额(元)": 72000000,  "年份": 2025 },
-      { "所属行业": "户外服装", "品牌名称": "Columbia/哥伦比亚",   "本期销量": 82000,  "本期估算销售额(元)": 65600000,  "年份": 2025 },
-
-      // === 男装 (2026) ===
-      { "所属行业": "男装", "品牌名称": "优衣库", "本期销量": 594019, "本期估算销售额(元)": 107730000, "年份": 2026 },
-      { "所属行业": "男装", "品牌名称": "骆驼",   "本期销量": 148959, "本期估算销售额(元)": 53747000,  "年份": 2026 },
-      { "所属行业": "男装", "品牌名称": "波司登", "本期销量": 33154,  "本期估算销售额(元)": 38808000,  "年份": 2026 },
-      { "所属行业": "男装", "品牌名称": "太平鸟", "本期销量": 112000, "本期估算销售额(元)": 36960000,  "年份": 2026 },
-
-      // === 男装 (2025) ===
-      { "所属行业": "男装", "品牌名称": "优衣库", "本期销量": 786000, "本期估算销售额(元)": 142680000, "年份": 2025 },
-      { "所属行业": "男装", "品牌名称": "骆驼",   "本期销量": 123500, "本期估算销售额(元)": 44560000,  "年份": 2025 },
-      { "所属行业": "男装", "品牌名称": "波司登", "本期销量": 35200,  "本期估算销售额(元)": 41240000,  "年份": 2025 },
-      { "所属行业": "男装", "品牌名称": "太平鸟", "本期销量": 135000, "本期估算销售额(元)": 44550000,  "年份": 2025 },
-
-      // === 女鞋 (2026) ===
-      { "所属行业": "女鞋", "品牌名称": "百丽",    "本期销量": 196156, "本期估算销售额(元)": 90005000,  "年份": 2026 },
-      { "所属行业": "女鞋", "品牌名称": "UGG",     "本期销量": 91540,  "本期估算销售额(元)": 87830000,  "年份": 2026 },
-      { "所属行业": "女鞋", "品牌名称": "STACCATO", "本期销量": 54795,  "本期估算销售额(元)": 53728000,  "年份": 2026 },
-
-      // === 女鞋 (2025) ===
-      { "所属行业": "女鞋", "品牌名称": "百丽",    "本期销量": 238000, "本期估算销售额(元)": 109480000, "年份": 2025 },
-      { "所属行业": "女鞋", "品牌名称": "UGG",     "本期销量": 94000,  "本期估算销售额(元)": 90176000,  "年份": 2025 },
-      { "所属行业": "女鞋", "品牌名称": "STACCATO", "本期销量": 48700,  "本期估算销售额(元)": 47750000,  "年份": 2025 }
-    ];
-
     /**
      * =========================================================================
      * GLOBAL SYSTEM STATE & CREDENTIALS
@@ -1465,7 +1162,6 @@
     // Starts with DEMO DATA for initial protection.
     let rawStoreList = [...DEMO_STORE_DATA];
     let rawProductList = [...DEMO_PRODUCT_DATA];
-    let rawBrandList = [...DEMO_BRAND_DATA];
 
     let selectedIndustries = new Set();
     let allAvailableIndustries = [];
@@ -1492,16 +1188,6 @@
     let m3YearMode = 'current';
     let m3TopN = 10;
     let m3Search = '';
-
-    // Module 4 Brand Benchmark & Detail Table State
-    let indBrandSortCol = 'currSalesYi';
-    let indBrandSortOrder = 'desc';
-    let m4Search = '';
-    let m4FilterTag = 'all';
-    let m4SortCol = 'currRank';
-    let m4SortOrder = 'asc';
-    let m4Page = 1;
-    let m4PageSize = 20;
 
     // ECharts Instance
     let chartTierCombinedInstance = null;
@@ -1537,7 +1223,7 @@
     }
 
     /**
-     * STREAMING_CHUNK:Configuring formatters for YoY, diffs, ranks, and units
+     * Formatting functions for YoY, diffs, ranks, and units
      */
     function formatYoY(val) {
       if (val === null || val === undefined || isNaN(val)) {
@@ -1593,7 +1279,7 @@
     }
 
     /**
-     * STREAMING_CHUNK:Computing cross-industry benchmarks and store calculations
+     * Computing cross-industry benchmarks and store calculations
      */
     function computeCrossIndustryBenchmark() {
       const industryMap = new Map();
@@ -1792,7 +1478,7 @@
     }
 
     /**
-     * STREAMING_CHUNK:Computing tier segmentation metrics (Module 2)
+     * Computing tier segmentation metrics (Module 2)
      */
     function computeTierAnalysis(stores) {
       const activeCurrent = stores.filter(s => s.currSales > 0).sort((a, b) => a.currRank - b.currRank);
@@ -1878,7 +1564,7 @@
     }
 
     /**
-     * STREAMING_CHUNK:Computing single product rankings and details (Module 3)
+     * Computing single product rankings and details (Module 3)
      */
     function computeProductAnalysis() {
       let filtered = selectedIndustries.size === 0
@@ -1927,345 +1613,6 @@
       return list;
     }
 
-    /**
-     * STREAMING_CHUNK:Computing cross-industry brand benchmark and brand competitive details (Module 4)
-     */
-    function computeCrossIndustryBrandBenchmark() {
-      const industryMap = new Map();
-
-      rawBrandList.forEach(row => {
-        const ind = String(row['所属行业'] || '其他/未分类').trim();
-        const yr = Number(row['年份']);
-        const sales = Number(row['本期估算销售额(元)'] || row['销售额'] || 0);
-        const volume = Number(row['本期销量'] || row['销量'] || 0);
-        const brandName = String(row['名牌名称'] || row['品牌名称'] || row['品牌'] || '').trim();
-
-        if (!industryMap.has(ind)) {
-          industryMap.set(ind, {
-            industry: ind,
-            currSales: 0,
-            prevSales: 0,
-            currVolume: 0,
-            prevVolume: 0,
-            brandsSet: new Set()
-          });
-        }
-
-        const item = industryMap.get(ind);
-        if (brandName) item.brandsSet.add(brandName);
-        if (yr === currentYear) {
-          item.currSales += sales;
-          item.currVolume += volume;
-        } else if (yr === priorYear) {
-          item.prevSales += sales;
-          item.prevVolume += volume;
-        }
-      });
-
-      const list = [];
-      let totalCurrSales = 0;
-      let totalPrevSales = 0;
-      let totalCurrVol = 0;
-      let totalPrevVol = 0;
-      const allBrandsSet = new Set();
-
-      industryMap.forEach(item => {
-        totalCurrSales += item.currSales;
-        totalPrevSales += item.prevSales;
-        totalCurrVol += item.currVolume;
-        totalPrevVol += item.prevVolume;
-        item.brandsSet.forEach(b => allBrandsSet.add(b));
-
-        const currSalesYi = item.currSales / 100000000;
-        const prevSalesYi = item.prevSales / 100000000;
-        const salesYoY = item.prevSales > 0 ? ((item.currSales - item.prevSales) / item.prevSales) * 100 : null;
-
-        const currVolumeWan = item.currVolume / 10000;
-        const prevVolumeWan = item.prevVolume / 10000;
-        const volumeYoY = item.prevVolume > 0 ? ((item.currVolume - item.prevVolume) / item.prevVolume) * 100 : null;
-
-        const currAsp = item.currVolume > 0 ? (item.currSales / item.currVolume) : 0;
-        const prevAsp = item.prevVolume > 0 ? (item.prevSales / item.prevVolume) : 0;
-        const aspYoY = prevAsp > 0 ? ((currAsp - prevAsp) / prevAsp) * 100 : null;
-
-        list.push({
-          industry: item.industry,
-          brandCount: item.brandsSet.size,
-          currSales: item.currSales,
-          prevSales: item.prevSales,
-          currSalesYi,
-          prevSalesYi,
-          salesYoY,
-          currVolume: item.currVolume,
-          prevVolume: item.prevVolume,
-          currVolumeWan,
-          prevVolumeWan,
-          volumeYoY,
-          currAsp,
-          prevAsp,
-          aspYoY,
-          isTotal: false
-        });
-      });
-
-      const totalCurrSalesYi = totalCurrSales / 100000000;
-      const totalPrevSalesYi = totalPrevSales / 100000000;
-      const totalSalesYoY = totalPrevSales > 0 ? ((totalCurrSales - totalPrevSales) / totalPrevSales) * 100 : null;
-      const totalCurrVolWan = totalCurrVol / 10000;
-      const totalPrevVolWan = totalPrevVol / 10000;
-      const totalVolYoY = totalPrevVol > 0 ? ((totalCurrVol - totalPrevVol) / totalPrevVol) * 100 : null;
-      const totalCurrAsp = totalCurrVol > 0 ? (totalCurrSales / totalCurrVol) : 0;
-      const totalPrevAsp = totalPrevVol > 0 ? (totalPrevSales / totalPrevVol) : 0;
-      const totalAspYoY = totalPrevAsp > 0 ? ((totalCurrAsp - totalPrevAsp) / totalPrevAsp) * 100 : null;
-
-      const totalRow = {
-        industry: '全行业品牌合计',
-        brandCount: allBrandsSet.size,
-        currSalesYi: totalCurrSalesYi,
-        prevSalesYi: totalPrevSalesYi,
-        salesYoY: totalSalesYoY,
-        currVolumeWan: totalCurrVolWan,
-        prevVolumeWan: totalPrevVolWan,
-        volumeYoY: totalVolYoY,
-        currAsp: totalCurrAsp,
-        prevAsp: totalPrevAsp,
-        aspYoY: totalAspYoY,
-        isTotal: true
-      };
-
-      return { list, totalRow };
-    }
-
-    function computeBrandAnalysis() {
-      const filtered = selectedIndustries.size === 0
-        ? rawBrandList
-        : rawBrandList.filter(item => selectedIndustries.has(item['所属行业']));
-
-      const brandMap = new Map();
-
-      filtered.forEach(row => {
-        const ind = row['所属行业'] || '未知行业';
-        const name = row['名牌名称'] || row['品牌名称'] || row['品牌'] || '未知品牌';
-        const yr = Number(row['年份']);
-        const key = `${ind}__${name}`;
-
-        if (!brandMap.has(key)) {
-          brandMap.set(key, {
-            key,
-            industry: ind,
-            brandName: name,
-            currRow: null,
-            prevRow: null
-          });
-        }
-
-        const entry = brandMap.get(key);
-        if (yr === currentYear) entry.currRow = row;
-        else if (yr === priorYear) entry.prevRow = row;
-      });
-
-      const brands = [];
-      brandMap.forEach(item => {
-        const currSales = item.currRow ? Number(item.currRow['本期估算销售额(元)'] || item.currRow['销售额'] || 0) : 0;
-        const prevSales = item.prevRow ? Number(item.prevRow['本期估算销售额(元)'] || item.prevRow['销售额'] || 0) : 0;
-        const currVolume = item.currRow ? Number(item.currRow['本期销量'] || item.currRow['销量'] || 0) : 0;
-        const prevVolume = item.prevRow ? Number(item.prevRow['本期销量'] || item.prevRow['销量'] || 0) : 0;
-
-        if (currSales === 0 && prevSales === 0 && currVolume === 0 && prevVolume === 0) return;
-
-        const currPrice = currVolume > 0 ? (currSales / currVolume) : 0;
-        const prevPrice = prevVolume > 0 ? (prevSales / prevVolume) : 0;
-
-        const salesYoY = prevSales > 0 ? ((currSales - prevSales) / prevSales) * 100 : null;
-        const volumeYoY = prevVolume > 0 ? ((currVolume - prevVolume) / prevVolume) * 100 : null;
-        const priceYoY = prevPrice > 0 ? ((currPrice - prevPrice) / prevPrice) * 100 : null;
-
-        brands.push({
-          key: item.key,
-          industry: item.industry,
-          brandName: item.brandName,
-          currSales,
-          prevSales,
-          currSalesWan: currSales / 10000,
-          prevSalesWan: prevSales / 10000,
-          salesYoY,
-          currVolume,
-          prevVolume,
-          currVolumeWan: currVolume / 10000,
-          prevVolumeWan: prevVolume / 10000,
-          volumeYoY,
-          currPrice,
-          prevPrice,
-          priceYoY,
-          currRank: 9999,
-          prevRank: null,
-          rankChange: null
-        });
-      });
-
-      // Rank Current Year
-      const currentRanked = [...brands].sort((a, b) => b.currSales - a.currSales);
-      let cRank = 1;
-      currentRanked.forEach(b => {
-        if (b.currSales > 0) b.currRank = cRank++;
-      });
-
-      // Rank Prior Year
-      const priorRanked = [...brands].sort((a, b) => b.prevSales - a.prevSales);
-      let pRank = 1;
-      priorRanked.forEach(b => {
-        if (b.prevSales > 0) b.prevRank = pRank++;
-      });
-
-      // Rank Mobility
-      brands.forEach(b => {
-        if (b.currRank < 9999) {
-          if (!b.prevRank) {
-            b.rankChange = 'NEW';
-          } else {
-            b.rankChange = b.prevRank - b.currRank;
-          }
-        } else {
-          b.rankChange = -999;
-        }
-      });
-
-      return brands;
-    }
-
-    function renderModule4IndustryBenchmark() {
-      const { list, totalRow } = computeCrossIndustryBrandBenchmark();
-
-      list.sort((a, b) => {
-        let valA = a[indBrandSortCol];
-        let valB = b[indBrandSortCol];
-        if (valA === null || valA === undefined) return 1;
-        if (valB === null || valB === undefined) return -1;
-        if (typeof valA === 'string') {
-          return indBrandSortOrder === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA);
-        }
-        return indBrandSortOrder === 'asc' ? (valA - valB) : (valB - valA);
-      });
-
-      const tbody = document.getElementById('brandBenchmarkTableBody');
-      if (!tbody) return;
-      const allRows = [...list, totalRow];
-
-      tbody.innerHTML = allRows.map(row => {
-        const isTot = row.isTotal;
-        const trClass = isTot ? 'bg-slate-50/90 font-bold border-t-2 border-slate-300' : 'hover:bg-slate-50/70 transition-colors';
-
-        return `
-          <tr class="${trClass}">
-            <td class="py-3.5 px-4 font-bold text-left flex items-center gap-2">
-              ${isTot ? '<i class="fa-solid fa-sigma text-purple-600"></i>' : '<span class="w-2 h-2 rounded-full bg-purple-500"></span>'}
-              <span class="${isTot ? 'text-purple-900 font-extrabold' : 'text-slate-900'}">${row.industry}</span>
-            </td>
-            <td class="py-3.5 px-3 font-semibold text-slate-600">${row.brandCount} 个</td>
-            <!-- Sales (亿元) - centered -->
-            <td class="py-3.5 px-3 font-bold text-blue-700 bg-blue-50/25">${row.currSalesYi.toFixed(2)}</td>
-            <td class="py-3.5 px-3 text-slate-600">${row.prevSalesYi.toFixed(2)}</td>
-            <td class="py-3.5 px-3">${formatYoY(row.salesYoY)}</td>
-            <!-- Volume (万件) - centered -->
-            <td class="py-3.5 px-3 font-semibold text-emerald-700 bg-emerald-50/25">${row.currVolumeWan.toFixed(2)}</td>
-            <td class="py-3.5 px-3 text-slate-600">${row.prevVolumeWan.toFixed(2)}</td>
-            <td class="py-3.5 px-3">${formatYoY(row.volumeYoY)}</td>
-            <!-- ASP (元) - centered -->
-            <td class="py-3.5 px-3 font-semibold text-amber-800 bg-amber-50/25">¥${row.currAsp.toFixed(1)}</td>
-            <td class="py-3.5 px-3 text-slate-600">¥${row.prevAsp.toFixed(1)}</td>
-            <td class="py-3.5 px-3">${formatYoY(row.aspYoY)}</td>
-          </tr>
-        `;
-      }).join('');
-    }
-
-    function renderModule4BrandTable(brands) {
-      let filtered = [...brands];
-
-      if (m4FilterTag === 'top10') filtered = filtered.filter(b => b.currRank <= 10);
-      else if (m4FilterTag === 'up') filtered = filtered.filter(b => b.rankChange > 0);
-      else if (m4FilterTag === 'new') filtered = filtered.filter(b => b.rankChange === 'NEW');
-
-      if (m4Search.trim()) {
-        const q = m4Search.trim().toLowerCase();
-        filtered = filtered.filter(b => b.brandName.toLowerCase().includes(q));
-      }
-
-      filtered.sort((a, b) => {
-        let valA = a[m4SortCol];
-        let valB = b[m4SortCol];
-        if (m4SortCol === 'rankChange') {
-          valA = valA === 'NEW' ? 9999 : (valA === null ? -9999 : Number(valA));
-          valB = valB === 'NEW' ? 9999 : (valB === null ? -9999 : Number(valB));
-        }
-        if (valA === null || valA === undefined) return 1;
-        if (valB === null || valB === undefined) return -1;
-        if (typeof valA === 'string') {
-          return m4SortOrder === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA);
-        }
-        return m4SortOrder === 'asc' ? (valA - valB) : (valB - valA);
-      });
-
-      const totalPages = Math.ceil(filtered.length / m4PageSize) || 1;
-      if (m4Page > totalPages) m4Page = totalPages;
-      if (m4Page < 1) m4Page = 1;
-
-      const paged = filtered.slice((m4Page - 1) * m4PageSize, m4Page * m4PageSize);
-      const tbody = document.getElementById('brandTableBody');
-      if (!tbody) return;
-
-      if (paged.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="11" class="py-10 text-center text-slate-400">未找到符合所选行业与筛选条件的品牌数据</td></tr>`;
-      } else {
-        tbody.innerHTML = paged.map(item => {
-          const isTop3 = item.currRank <= 3;
-          const rankBadge = isTop3
-            ? `<span class="inline-flex items-center justify-center w-6 h-6 rounded-full font-bold text-xs ${
-                item.currRank === 1 ? 'bg-amber-400 text-amber-950 ring-2 ring-amber-200' :
-                item.currRank === 2 ? 'bg-slate-300 text-slate-900 ring-2 ring-slate-100' :
-                'bg-amber-600/80 text-white'
-              }">${item.currRank}</span>`
-            : `<span class="font-bold text-slate-600">${item.currRank >= 9999 ? '-' : item.currRank}</span>`;
-
-          return `
-            <tr class="hover:bg-slate-50/80 transition-colors">
-              <td class="py-3 px-3">${rankBadge}</td>
-              <td class="py-3 px-3">${formatRankChange(item.rankChange, item.prevRank)}</td>
-              <td class="py-3 px-4 font-bold text-slate-900 text-left flex items-center gap-1.5">
-                <i class="fa-solid fa-tag text-purple-400 text-[11px]"></i>
-                <span>${item.brandName}</span>
-              </td>
-              <!-- GMV (万元) & YoY - Centered -->
-              <td class="py-3 px-3 font-bold text-blue-700 bg-blue-50/25">${item.currSalesWan.toFixed(2)}</td>
-              <td class="py-3 px-3">${formatYoY(item.salesYoY)}</td>
-              <!-- Volume (万件) & YoY - Centered -->
-              <td class="py-3 px-3 font-semibold text-emerald-700 bg-emerald-50/25">${item.currVolumeWan.toFixed(2)}</td>
-              <td class="py-3 px-3">${formatYoY(item.volumeYoY)}</td>
-              <!-- ASP (元) - Centered -->
-              <td class="py-3 px-3 font-semibold text-amber-800 bg-amber-50/25">${item.currPrice > 0 ? '¥' + item.currPrice.toFixed(1) : '-'}</td>
-              <td class="py-3 px-3 text-slate-500">${item.prevPrice > 0 ? '¥' + item.prevPrice.toFixed(1) : '-'}</td>
-              <td class="py-3 px-3">${formatYoY(item.priceYoY)}</td>
-              <td class="py-3 px-3 text-slate-400 font-medium">${item.prevRank ? '#' + item.prevRank : '-'}</td>
-            </tr>
-          `;
-        }).join('');
-      }
-
-      document.getElementById('m4PageInfoText').textContent = `第 ${m4Page} / ${totalPages} 页 (共 ${filtered.length} 个品牌)`;
-      document.getElementById('m4PrevPageBtn').disabled = (m4Page <= 1);
-      document.getElementById('m4NextPageBtn').disabled = (m4Page >= totalPages);
-
-      const numBox = document.getElementById('m4PageNumbers');
-      numBox.innerHTML = '';
-      for (let p = Math.max(1, m4Page - 2); p <= Math.min(totalPages, m4Page + 2); p++) {
-        const btn = document.createElement('button');
-        btn.textContent = p;
-        btn.className = `w-7 h-7 rounded-md text-xs font-semibold ${p === m4Page ? 'bg-purple-600 text-white shadow-xs' : 'border border-slate-200 text-slate-600 hover:bg-slate-100'}`;
-        btn.onclick = () => { m4Page = p; renderModule4BrandTable(brands); };
-        numBox.appendChild(btn);
-      }
-    }
-
     function updateTopKpiCards(stores, tierData) {
       const { totalRow, tierResults, rawCurrTotalSales, rawPrevTotalSales } = tierData;
 
@@ -2295,13 +1642,10 @@
 
       document.getElementById('statStoreCount').textContent = stores.filter(s => s.currSales > 0).length;
       document.getElementById('statProductCount').textContent = rawProductList.filter(p => selectedIndustries.size === 0 || selectedIndustries.has(p['所属行业'])).length;
-      const brandStat = computeBrandAnalysis();
-      const brandBadge = document.getElementById('statBrandCount');
-      if (brandBadge) brandBadge.textContent = brandStat.filter(b => b.currSales > 0).length;
     }
 
     /**
-     * STREAMING_CHUNK:Rendering Module 1 cross-industry overview table (values centered)
+     * Rendering Module 1 cross-industry overview table (values centered)
      */
     function renderModule1IndustryBenchmark() {
       const { list, totalRow } = computeCrossIndustryBenchmark();
@@ -2348,7 +1692,7 @@
     }
 
     /**
-     * STREAMING_CHUNK:Rendering Module 1 store table (values centered, removed prior sales & vol)
+     * Rendering Module 1 store table (values centered, removed prior sales & vol)
      */
     function renderModule1StoreTable(stores) {
       let filtered = [...stores];
@@ -2397,7 +1741,6 @@
               }">${item.currRank}</span>`
             : `<span class="font-bold text-slate-600">${item.currRank >= 9999 ? '-' : item.currRank}</span>`;
 
-          // Removed 同期销额 and 同期销量 per requirement; all numerical cells are text-center
           return `
             <tr class="hover:bg-slate-50/80 transition-colors">
               <td class="py-3 px-3">${rankBadge}</td>
@@ -2438,7 +1781,7 @@
     }
 
     /**
-     * STREAMING_CHUNK:Rendering Module 2 combined dual-axis chart (reliable rendering fix)
+     * Rendering Module 2 combined dual-axis chart
      */
     function renderModule2CombinedChart(tierData) {
       const { tierResults } = tierData;
@@ -2596,7 +1939,7 @@
     }
 
     /**
-     * STREAMING_CHUNK:Rendering Module 2 tier statistics table (centered, removed prior sales & vol)
+     * Rendering Module 2 tier statistics table
      */
     function renderModule2(tierData) {
       const { tierResults, totalRow } = tierData;
@@ -2643,7 +1986,7 @@
     }
 
     /**
-     * STREAMING_CHUNK:Rendering Module 3 showcase cards and reordered detail table
+     * Rendering Module 3 showcase cards and reordered detail table
      */
     function renderModule3(products) {
       document.getElementById('m3CurrYearLabel').textContent = currentYear;
@@ -2726,8 +2069,6 @@
         }).join('');
       }
 
-      // Render Detailed Product List Table with Reordered Columns:
-      // Order: 排名 -> 主图 -> 标题 -> ID -> 行业 -> 店铺名称 -> 估算销额(万元) -> 销量(万件) -> 件单价(元) -> 商品链接 -> 品牌/款号 -> 年份/季节
       document.getElementById('m3TableCountLabel').textContent = `共筛选出 ${products.length} 款商品 (展示 TOP ${m3TopN})`;
       const tbody = document.getElementById('productTableBody');
 
@@ -2739,7 +2080,6 @@
           return `
             <tr class="hover:bg-slate-50/80 transition-colors">
               <td class="py-3 px-3 font-bold text-slate-700">#${idx + 1}</td>
-              <!-- Enlarged Image Thumbnail (w-16 h-16) with click to lightbox -->
               <td class="py-2.5 px-3">
                 <div class="w-16 h-16 mx-auto rounded-xl overflow-hidden border border-slate-200 shadow-2xs relative bg-slate-100 cursor-pointer" onclick="openLightbox('${item.img || fallbackSvg}', '${item.title.replace(/'/g, "\\'")}', '${item.storeName} · 销额 ${item.salesWan.toFixed(1)}万', '${item.url}')">
                   <img src="${item.img || fallbackSvg}" onerror="this.src='${fallbackSvg}'" data-fullimg="${item.img || fallbackSvg}" data-title="${item.title}" class="product-preview-img w-full h-full object-cover img-zoom-hover">
@@ -2836,7 +2176,7 @@
     }
 
     /**
-     * STREAMING_CHUNK:Exporting PDF and Excel files (Module 1, 2, 3)
+     * Exporting PDF and Excel files
      */
     function exportTableToPdf(elementId, filename) {
       const element = document.getElementById(elementId);
@@ -2987,46 +2327,6 @@
       downloadCsvFile(`店铺大促表现_${currentYear}vs${priorYear}.csv`, headers, rows);
     }
 
-    function exportModule4BrandCsv() {
-      const brands = computeBrandAnalysis();
-      const headers = ['本期排名', '排名升降', '品牌名称', '本期销额(万元)', '销额同比(%)', '本期销量(万件)', '销量同比(%)', '本期件单价(元)', '同期件单价(元)', '件单价同比(%)', '同期排名'];
-      const rows = brands.map(b => [
-        b.currRank >= 9999 ? '-' : b.currRank,
-        b.rankChange === 'NEW' ? '新上榜' : (b.rankChange > 0 ? `+${b.rankChange}` : b.rankChange),
-        `"${b.brandName}"`,
-        b.currSalesWan.toFixed(2),
-        b.salesYoY !== null ? b.salesYoY.toFixed(2) + '%' : '-',
-        b.currVolumeWan.toFixed(2),
-        b.volumeYoY !== null ? b.volumeYoY.toFixed(2) + '%' : '-',
-        b.currPrice.toFixed(2),
-        b.prevPrice.toFixed(2),
-        b.priceYoY !== null ? b.priceYoY.toFixed(2) + '%' : '-',
-        b.prevRank || '-'
-      ]);
-
-      downloadCsvFile(`品牌大促表现_${currentYear}vs${priorYear}.csv`, headers, rows);
-    }
-
-    function exportModule4IndustryCsv() {
-      const { list, totalRow } = computeCrossIndustryBrandBenchmark();
-      const headers = ['所属行业', '品牌数', '本期销额(亿元)', '同期销额(亿元)', '销额同比(%)', '本期销量(万件)', '同期销量(万件)', '销量同比(%)', '本期件单价(元)', '同期件单价(元)', '件单价同比(%)'];
-      const rows = [...list, totalRow].map(r => [
-        `"${r.industry}"`,
-        r.brandCount,
-        r.currSalesYi.toFixed(2),
-        r.prevSalesYi.toFixed(2),
-        r.salesYoY !== null ? r.salesYoY.toFixed(2) + '%' : '-',
-        r.currVolumeWan.toFixed(2),
-        r.prevVolumeWan.toFixed(2),
-        r.volumeYoY !== null ? r.volumeYoY.toFixed(2) + '%' : '-',
-        r.currAsp.toFixed(2),
-        r.prevAsp.toFixed(2),
-        r.aspYoY !== null ? r.aspYoY.toFixed(2) + '%' : '-'
-      ]);
-
-      downloadCsvFile(`全行业品牌大盘对比概览_${currentYear}vs${priorYear}.csv`, headers, rows);
-    }
-
     function exportModule2Csv() {
       const stores = computeStoreAnalysis();
       const { tierResults, totalRow } = computeTierAnalysis(stores);
@@ -3086,7 +2386,7 @@
     }
 
     /**
-     * STREAMING_CHUNK:Configuring master dispatcher and filter dropdown synchronization
+     * Master dispatcher and filter dropdown synchronization
      */
     function refreshAll() {
       const stores = computeStoreAnalysis();
@@ -3099,17 +2399,12 @@
 
       const products = computeProductAnalysis();
       renderModule3(products);
-
-      const brands = computeBrandAnalysis();
-      renderModule4IndustryBenchmark();
-      renderModule4BrandTable(brands);
     }
 
     function updateDropdownOptions() {
       const indSet = new Set();
       rawStoreList.forEach(s => s['所属行业'] && indSet.add(String(s['所属行业']).trim()));
       rawProductList.forEach(p => p['所属行业'] && indSet.add(String(p['所属行业']).trim()));
-      rawBrandList.forEach(b => b['所属行业'] && indSet.add(String(b['所属行业']).trim()));
 
       allAvailableIndustries = Array.from(indSet).sort();
       selectedIndustries = new Set(allAvailableIndustries);
@@ -3118,13 +2413,11 @@
       updateIndustryDropdownLabel();
       populateModule1LocalIndustrySelect();
       populateModule3LocalIndustrySelect();
-      populateModule4LocalIndustrySelect();
 
       // Years
       const yearSet = new Set();
       rawStoreList.forEach(s => !isNaN(s['年份']) && yearSet.add(Number(s['年份'])));
       rawProductList.forEach(p => !isNaN(p['年份']) && yearSet.add(Number(p['年份'])));
-      rawBrandList.forEach(b => !isNaN(b['年份']) && yearSet.add(Number(b['年份'])));
 
       const years = Array.from(yearSet).sort((a, b) => b - a);
       if (years.length === 0) years.push(2026, 2025);
@@ -3212,21 +2505,9 @@
       syncLinkedIndustrySelects();
     }
 
-    function populateModule4LocalIndustrySelect() {
-      const localSel = document.getElementById('m4LocalIndustrySelect');
-      if (!localSel) return;
-      localSel.innerHTML = '';
-      localSel.add(new Option('全部行业切片', '__ALL__'));
-      allAvailableIndustries.forEach(ind => {
-        localSel.add(new Option(ind, ind));
-      });
-      syncLinkedIndustrySelects();
-    }
-
     function syncLinkedIndustrySelects() {
       const m1Sel = document.getElementById('m1LocalIndustrySelect');
       const m3Sel = document.getElementById('m3LocalIndustrySelect');
-      const m4Sel = document.getElementById('m4LocalIndustrySelect');
 
       let targetVal = '__ALL__';
       if (selectedIndustries.size === 1) {
@@ -3235,7 +2516,6 @@
 
       if (m1Sel) m1Sel.value = targetVal;
       if (m3Sel) m3Sel.value = targetVal;
-      if (m4Sel) m4Sel.value = targetVal;
     }
 
     function handleLocalIndustryChange(val) {
@@ -3250,13 +2530,12 @@
       updateIndustryDropdownLabel();
       syncLinkedIndustrySelects();
       m1Page = 1;
-      m4Page = 1;
       refreshAll();
       showToast(`已切换当前分析行业：${val === '__ALL__' ? '全部行业' : val}`, 'info');
     }
 
     /**
-     * STREAMING_CHUNK:Parsing uploaded Excel files and sample downloads
+     * Parsing uploaded Excel files and sample downloads
      */
     function parseUploadedExcel(file) {
       const reader = new FileReader();
@@ -3267,7 +2546,6 @@
 
           let parsedStores = null;
           let parsedProducts = null;
-          let parsedBrands = null;
 
           workbook.SheetNames.forEach(sheetName => {
             const cleanSheetName = sheetName.trim();
@@ -3278,26 +2556,9 @@
             const sampleKeys = Object.keys(sample).map(k => k.trim());
 
             const hasProductId = sampleKeys.some(k => k.includes('商品ID') || k.includes('商品标题') || k.includes('主图'));
-            const isBrandSheet = cleanSheetName.includes('品牌') || cleanSheetName.includes('名牌') || sampleKeys.some(k => k.includes('品牌名称') || k.includes('名牌名称'));
-            const isStoreSheet = !hasProductId && !isBrandSheet && (cleanSheetName.includes('店铺') || sampleKeys.some(k => k.includes('店铺名称')));
+            const isStoreSheet = !hasProductId && (cleanSheetName.includes('店铺') || sampleKeys.some(k => k.includes('店铺名称')));
 
-            if (isBrandSheet) {
-              const normalizedBrands = jsonRows.map(row => {
-                const item = {};
-                for (const key of Object.keys(row)) {
-                  const k = key.trim();
-                  const val = row[key];
-                  if (k.includes('行业')) item['所属行业'] = String(val).trim();
-                  else if (k.includes('品牌') || k.includes('名牌')) item['品牌名称'] = String(val).trim();
-                  else if (k.includes('销量') || k.includes('件数')) item['本期销量'] = Number(val) || 0;
-                  else if (k.includes('销售额') || k.includes('销额')) item['本期估算销售额(元)'] = Number(val) || 0;
-                  else if (k.includes('年份')) item['年份'] = Number(val) || 0;
-                }
-                return item;
-              }).filter(b => (b['品牌名称'] || b['名牌名称']) && b['年份']);
-
-              if (normalizedBrands.length > 0) parsedBrands = normalizedBrands;
-            } else if (hasProductId || cleanSheetName.includes('单品')) {
+            if (hasProductId || cleanSheetName.includes('单品')) {
               const normalizedProds = jsonRows.map(row => {
                 const item = {};
                 for (const key of Object.keys(row)) {
@@ -3340,19 +2601,18 @@
             }
           });
 
-          if (!parsedStores && !parsedProducts && !parsedBrands) {
-            showToast('未检测到符合规范的【店铺表】、【单品表】或【品牌表】字段，请核对表头', 'error');
+          if (!parsedStores && !parsedProducts) {
+            showToast('未检测到符合规范的【店铺表】或【单品表】字段，请核对表头', 'error');
             return;
           }
 
           if (parsedStores) rawStoreList = parsedStores;
           if (parsedProducts) rawProductList = parsedProducts;
-          if (parsedBrands) rawBrandList = parsedBrands;
 
           updateDropdownOptions();
           refreshAll();
           document.getElementById('uploadModal').classList.add('hidden');
-          showToast(`成功载入！店铺 ${rawStoreList.length} 条，单品 ${rawProductList.length} 条，品牌 ${rawBrandList.length} 条`, 'success');
+          showToast(`成功载入！店铺 ${rawStoreList.length} 条，单品 ${rawProductList.length} 条`, 'success');
 
         } catch (err) {
           console.error(err);
@@ -3390,26 +2650,17 @@
         }
       ];
 
-      const brandSample = [
-        { "所属行业": "女装/女士精品", "名牌名称": "波司登", "本期销量": 492000, "本期估算销售额(元)": 393600000, "年份": 2026 },
-        { "所属行业": "女装/女士精品", "名牌名称": "波司登", "本期销量": 440000, "本期估算销售额(元)": 330000000, "年份": 2025 },
-        { "所属行业": "运动服/休闲服装", "名牌名称": "FILA", "本期销量": 525861, "本期估算销售额(元)": 323675000, "年份": 2026 },
-        { "所属行业": "运动服/休闲服装", "名牌名称": "FILA", "本期销量": 495000, "本期估算销售额(元)": 304770000, "年份": 2025 }
-      ];
-
       const wsStore = XLSX.utils.json_to_sheet(storeSample);
       const wsProduct = XLSX.utils.json_to_sheet(productSample);
-      const wsBrand = XLSX.utils.json_to_sheet(brandSample);
 
       XLSX.utils.book_append_sheet(wb, wsStore, "店铺");
       XLSX.utils.book_append_sheet(wb, wsProduct, "单品");
-      XLSX.utils.book_append_sheet(wb, wsBrand, "品牌");
-      XLSX.writeFile(wb, "电商大促行业分析模板_店铺单品与品牌.xlsx");
+      XLSX.writeFile(wb, "电商大促行业分析模板_店铺与单品.xlsx");
       showToast('模板下载成功，可填入数据后点击导入', 'info');
     }
 
     /**
-     * STREAMING_CHUNK:Initializing event listeners and security login/logout logic
+     * Initializing event listeners and security login/logout logic
      */
     window.addEventListener('DOMContentLoaded', () => {
       // 1. Authentication Handlers
@@ -3453,7 +2704,6 @@
           // Load REAL AUTHENTIC DATA
           rawStoreList = [...REAL_STORE_DATA];
           rawProductList = [...REAL_PRODUCT_DATA];
-          rawBrandList = [...REAL_BRAND_DATA];
           updateDropdownOptions();
           refreshAll();
 
@@ -3483,7 +2733,6 @@
           // Reset Data to DEMO DATA
           rawStoreList = [...DEMO_STORE_DATA];
           rawProductList = [...DEMO_PRODUCT_DATA];
-          rawBrandList = [...DEMO_BRAND_DATA];
           updateDropdownOptions();
           refreshAll();
 
@@ -3515,9 +2764,8 @@
         if (chartTierCombinedInstance) chartTierCombinedInstance.resize();
       });
 
-      // Tab Navigation Handling (Fix: Auto-resize chart on Module 2 activation)
+      // Tab Navigation Handling
       const tabs = [
-        { btn: document.getElementById('tabBtnModule4'), content: document.getElementById('contentModule4') },
         { btn: document.getElementById('tabBtnModule1'), content: document.getElementById('contentModule1') },
         { btn: document.getElementById('tabBtnModule2'), content: document.getElementById('contentModule2') },
         { btn: document.getElementById('tabBtnModule3'), content: document.getElementById('contentModule3') }
@@ -3584,14 +2832,11 @@
         refreshAll();
       });
 
-      // Synchronized Local Industry Selectors (Module 1, Module 3 & Module 4)
+      // Synchronized Local Industry Selectors (Module 1 & Module 3)
       document.getElementById('m1LocalIndustrySelect').addEventListener('change', (e) => {
         handleLocalIndustryChange(e.target.value);
       });
       document.getElementById('m3LocalIndustrySelect').addEventListener('change', (e) => {
-        handleLocalIndustryChange(e.target.value);
-      });
-      document.getElementById('m4LocalIndustrySelect').addEventListener('change', (e) => {
         handleLocalIndustryChange(e.target.value);
       });
 
@@ -3617,17 +2862,6 @@
       });
       document.getElementById('m1ExportCsvBtn').addEventListener('click', exportModule1StoreCsv);
 
-      // Module 4 Export Events (PDF & CSV)
-      document.getElementById('m4ExportIndustryPdfBtn').addEventListener('click', () => {
-        exportTableToPdf('m4IndustryPdfContainer', `全行业品牌大盘对比概览_${currentYear}vs${priorYear}.pdf`);
-      });
-      document.getElementById('m4ExportIndustryCsvBtn').addEventListener('click', exportModule4IndustryCsv);
-
-      document.getElementById('m4ExportBrandPdfBtn').addEventListener('click', () => {
-        exportTableToPdf('m4BrandPdfContainer', `品牌大促表现_${currentYear}vs${priorYear}.pdf`);
-      });
-      document.getElementById('m4ExportBrandCsvBtn').addEventListener('click', exportModule4BrandCsv);
-
       document.querySelectorAll('#industryBenchmarkTable thead th[data-sort-ind]').forEach(th => {
         th.addEventListener('click', () => {
           const col = th.dataset.sortInd;
@@ -3648,37 +2882,10 @@
         });
       });
 
-      // Module 4 Brand Benchmark Sorting
-      document.querySelectorAll('#brandBenchmarkTable thead th[data-sort-ind]').forEach(th => {
-        th.addEventListener('click', () => {
-          const col = th.dataset.sortInd;
-          if (indBrandSortCol === col) {
-            indBrandSortOrder = indBrandSortOrder === 'asc' ? 'desc' : 'asc';
-          } else {
-            indBrandSortCol = col;
-            indBrandSortOrder = 'desc';
-          }
-          document.querySelectorAll('#brandBenchmarkTable thead th[data-sort-ind] i').forEach(icon => {
-            icon.className = 'fa-solid fa-sort text-slate-300 text-[10px]';
-          });
-          const activeIcon = th.querySelector('i');
-          if (activeIcon) {
-            activeIcon.className = indBrandSortOrder === 'asc' ? 'fa-solid fa-sort-up text-purple-600 text-xs' : 'fa-solid fa-sort-down text-purple-600 text-xs';
-          }
-          renderModule4IndustryBenchmark();
-        });
-      });
-
       document.getElementById('m1SearchInput').addEventListener('input', (e) => {
         m1Search = e.target.value;
         m1Page = 1;
         renderModule1StoreTable(computeStoreAnalysis());
-      });
-
-      document.getElementById('m4SearchInput').addEventListener('input', (e) => {
-        m4Search = e.target.value;
-        m4Page = 1;
-        renderModule4BrandTable(computeBrandAnalysis());
       });
 
       document.querySelectorAll('#m1QuickFilters .m1-filter').forEach(btn => {
@@ -3690,18 +2897,6 @@
           m1FilterTag = btn.dataset.filter;
           m1Page = 1;
           renderModule1StoreTable(computeStoreAnalysis());
-        });
-      });
-
-      document.querySelectorAll('#m4QuickFilters .m4-filter').forEach(btn => {
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('#m4QuickFilters .m4-filter').forEach(b => {
-            b.classList.remove('active', 'bg-white', 'text-purple-700', 'shadow-xs', 'font-semibold');
-          });
-          btn.classList.add('active', 'bg-white', 'text-purple-700', 'shadow-xs', 'font-semibold');
-          m4FilterTag = btn.dataset.filter;
-          m4Page = 1;
-          renderModule4BrandTable(computeBrandAnalysis());
         });
       });
 
@@ -3726,27 +2921,6 @@
         });
       });
 
-      document.querySelectorAll('#brandTable thead th[data-sort]').forEach(th => {
-        th.addEventListener('click', () => {
-          const col = th.dataset.sort;
-          if (m4SortCol === col) {
-            m4SortOrder = m4SortOrder === 'asc' ? 'desc' : 'asc';
-          } else {
-            m4SortCol = col;
-            m4SortOrder = (col === 'currRank' || col === 'prevRank') ? 'asc' : 'desc';
-          }
-
-          document.querySelectorAll('#brandTable thead th[data-sort] i').forEach(icon => {
-            icon.className = 'fa-solid fa-sort text-slate-300 text-[10px]';
-          });
-          const activeIcon = th.querySelector('i');
-          if (activeIcon) {
-            activeIcon.className = m4SortOrder === 'asc' ? 'fa-solid fa-sort-up text-purple-600 text-xs' : 'fa-solid fa-sort-down text-purple-600 text-xs';
-          }
-          renderModule4BrandTable(computeBrandAnalysis());
-        });
-      });
-
       document.getElementById('m1PageSizeSelect').addEventListener('change', (e) => {
         m1PageSize = Number(e.target.value);
         m1Page = 1;
@@ -3759,20 +2933,6 @@
 
       document.getElementById('m1NextPageBtn').addEventListener('click', () => {
         m1Page++; renderModule1StoreTable(computeStoreAnalysis());
-      });
-
-      document.getElementById('m4PageSizeSelect').addEventListener('change', (e) => {
-        m4PageSize = Number(e.target.value);
-        m4Page = 1;
-        renderModule4BrandTable(computeBrandAnalysis());
-      });
-
-      document.getElementById('m4PrevPageBtn').addEventListener('click', () => {
-        if (m4Page > 1) { m4Page--; renderModule4BrandTable(computeBrandAnalysis()); }
-      });
-
-      document.getElementById('m4NextPageBtn').addEventListener('click', () => {
-        m4Page++; renderModule4BrandTable(computeBrandAnalysis());
       });
 
       // Module 2 Dynamic Metric Switcher
@@ -3844,7 +3004,6 @@
       document.getElementById('confirmUsePresetBtn').addEventListener('click', () => {
         rawStoreList = currentAuthUser ? [...REAL_STORE_DATA] : [...DEMO_STORE_DATA];
         rawProductList = currentAuthUser ? [...REAL_PRODUCT_DATA] : [...DEMO_PRODUCT_DATA];
-        rawBrandList = currentAuthUser ? [...REAL_BRAND_DATA] : [...DEMO_BRAND_DATA];
         updateDropdownOptions();
         refreshAll();
         uploadModal.classList.add('hidden');
