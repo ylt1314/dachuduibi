@@ -191,9 +191,9 @@
           <span>体验受保护演示数据 (免密预览)</span>
         </button>
 
-        <!-- Credentials hint badge for authorized users -->
+        <!-- Credentials are intentionally not displayed on the login screen -->
         <div class="pt-2 text-center text-[11px] text-slate-400">
-          <p>授权登录凭证：10211 (abc@10211) / 14599 (888888)</p>
+          <p>授权账号请使用已分配的登录凭证</p>
           <p class="text-[10px] text-amber-600 font-medium mt-1">未登录状态下系统仅呈现脱敏演示数据，退出后自动重置</p>
         </div>
       </form>
@@ -515,7 +515,7 @@
               <i class="fa-solid fa-list-check text-blue-600"></i>
               店铺大促表现
             </h3>
-            <p class="text-xs text-slate-500 mt-1">展示店铺本期销额(万元)、本期销量(万件)、件单价及排名位次变化（数值居中显示），支持导出 PDF / CSV</p>
+            <p class="text-xs text-slate-500 mt-1">展示店铺本期销额(亿元)、本期销量(万件)、件单价及排名位次变化（数值居中显示），支持导出 PDF / CSV</p>
           </div>
           
           <div class="flex flex-wrap items-center gap-3">
@@ -731,7 +731,7 @@
           <!-- Dynamic Metric Switcher Buttons (动态切换指标) -->
           <div class="flex items-center bg-slate-100 p-1 rounded-xl text-xs font-semibold text-slate-600" id="m2MetricSwitcher">
             <button data-metric="sales" class="m2-metric-btn active px-3 py-1.5 rounded-lg bg-white text-blue-700 shadow-xs font-bold transition-all">
-              <i class="fa-solid fa-coins mr-1 text-[11px]"></i> 销额 (万元)
+              <i class="fa-solid fa-coins mr-1 text-[11px]"></i> 销额 (亿元)
             </button>
             <button data-metric="volume" class="m2-metric-btn px-3 py-1.5 rounded-lg hover:text-slate-900 transition-all">
               <i class="fa-solid fa-box-open mr-1 text-[11px]"></i> 销量 (万件)
@@ -758,7 +758,7 @@
               排名梯队多维指标全景统计表
             </h3>
             <p class="text-xs text-slate-500 mt-1">
-              销量与销额已统一转换为【万】为单位，展示各梯队大盘份额与同比增速（数值居中显示，范围：<span id="tierTableScopeLabel" class="text-blue-600 font-semibold">所选行业</span>）
+              销额以【亿元】、销量以【万件】为单位，展示各梯队大盘份额与同比增速（数值居中显示，范围：<span id="tierTableScopeLabel" class="text-blue-600 font-semibold">所选行业</span>）
             </p>
           </div>
           <span class="text-xs font-medium text-slate-400">统计基准：按估算销售额降序划分梯队</span>
@@ -770,8 +770,8 @@
               <tr>
                 <th class="py-3.5 px-4 font-bold text-left">排名梯队</th>
                 <th class="py-3.5 px-3">本期店铺数</th>
-                <!-- Sales (万元) & YoY -->
-                <th class="py-3.5 px-3 bg-blue-50/40 text-blue-950 font-bold">本期销额(万元)</th>
+                <!-- Sales (亿元) & YoY -->
+                <th class="py-3.5 px-3 bg-blue-50/40 text-blue-950 font-bold">本期销额(亿元)</th>
                 <th class="py-3.5 px-3">销额同比</th>
                 <!-- Sales Share (%) -->
                 <th class="py-3.5 px-3 bg-purple-50/40 text-purple-950 font-bold">本期额占比</th>
@@ -1923,8 +1923,8 @@
     }
 
     function formatDailyPivotRaw(value, metric) {
-      const converted = (Number(value) || 0) / 10000;
-      return converted.toLocaleString('zh-CN', { minimumFractionDigits: 0, maximumFractionDigits: 2 }) + (metric === 'sales' ? '万元' : '万件');
+      const converted = (Number(value) || 0) / (metric === 'sales' ? 100000000 : 10000);
+      return converted.toLocaleString('zh-CN', { minimumFractionDigits: 0, maximumFractionDigits: 3 }) + (metric === 'sales' ? '亿元' : '万件');
     }
 
     function dailyPivotYoY(currentValue, priorValue) {
@@ -2108,16 +2108,16 @@
         metrics.forEach(metric => {
           headers.push(`${formatDailyPivotDate(date)} VS ${formatDailyPivotDate(priorDate)}-${dailyPivotMetricLabel(metric)}`);
           if (m1DailyPivotShowDetails) {
-            headers.push(`${formatDailyPivotDate(date)}-本期${dailyPivotValueLabel(metric)}(${metric === 'sales' ? '万元' : '万件'})`);
-            headers.push(`${formatDailyPivotDate(priorDate)}-同期${dailyPivotValueLabel(metric)}(${metric === 'sales' ? '万元' : '万件'})`);
+            headers.push(`${formatDailyPivotDate(date)}-本期${dailyPivotValueLabel(metric)}(${metric === 'sales' ? '亿元' : '万件'})`);
+            headers.push(`${formatDailyPivotDate(priorDate)}-同期${dailyPivotValueLabel(metric)}(${metric === 'sales' ? '亿元' : '万件'})`);
           }
         });
       });
       metrics.forEach(metric => {
         headers.push(`所选区间整体同比-${dailyPivotMetricLabel(metric)}`);
         if (m1DailyPivotShowDetails) {
-          headers.push(`区间本期${dailyPivotValueLabel(metric)}(${metric === 'sales' ? '万元' : '万件'})`);
-          headers.push(`区间同期${dailyPivotValueLabel(metric)}(${metric === 'sales' ? '万元' : '万件'})`);
+          headers.push(`区间本期${dailyPivotValueLabel(metric)}(${metric === 'sales' ? '亿元' : '万件'})`);
+          headers.push(`区间同期${dailyPivotValueLabel(metric)}(${metric === 'sales' ? '亿元' : '万件'})`);
         }
       });
       const csvEscape = value => `"${String(value ?? '').replace(/"/g, '""')}"`;
@@ -2127,16 +2127,16 @@
           const mv = day[metric];
           result.push(mv.yoy === null ? '-' : `${mv.yoy.toFixed(2)}%`);
           if (m1DailyPivotShowDetails) {
-            result.push((mv.current / 10000).toFixed(2));
-            result.push((mv.prior / 10000).toFixed(2));
+            result.push((mv.current / (metric === 'sales' ? 100000000 : 10000)).toFixed(metric === 'sales' ? 3 : 2));
+            result.push((mv.prior / (metric === 'sales' ? 100000000 : 10000)).toFixed(metric === 'sales' ? 3 : 2));
           }
         }));
         metrics.forEach(metric => {
           const mv = row.overall[metric];
           result.push(mv.yoy === null ? '-' : `${mv.yoy.toFixed(2)}%`);
           if (m1DailyPivotShowDetails) {
-            result.push((mv.current / 10000).toFixed(2));
-            result.push((mv.prior / 10000).toFixed(2));
+            result.push((mv.current / (metric === 'sales' ? 100000000 : 10000)).toFixed(metric === 'sales' ? 3 : 2));
+            result.push((mv.prior / (metric === 'sales' ? 100000000 : 10000)).toFixed(metric === 'sales' ? 3 : 2));
           }
         });
         return result;
@@ -2309,7 +2309,7 @@
       const tierLabels = tierResults.map(t => t.tierName);
 
       let metricName = '销额';
-      let unit = '万元';
+      let unit = '亿元';
       let currData = [];
       let prevData = [];
       let yoyData = [];
@@ -2317,9 +2317,9 @@
 
       if (m2CurrentMetric === 'sales') {
         metricName = '销额';
-        unit = '万元';
-        currData = tierResults.map(t => Number(t.currSalesWan.toFixed(2)));
-        prevData = tierResults.map(t => Number(t.prevSalesWan.toFixed(2)));
+        unit = '亿元';
+        currData = tierResults.map(t => Number((t.currSalesWan / 10000).toFixed(3)));
+        prevData = tierResults.map(t => Number((t.prevSalesWan / 10000).toFixed(3)));
         yoyData = tierResults.map(t => t.salesYoY !== null ? Number(t.salesYoY.toFixed(1)) : 0);
       } else if (m2CurrentMetric === 'volume') {
         metricName = '销量';
@@ -2480,8 +2480,8 @@
               ${row.tierName}
             </td>
             <td class="py-3.5 px-3 font-semibold text-slate-600">${row.storeCount} 家</td>
-            <!-- GMV (万元) & YoY - Centered -->
-            <td class="py-3.5 px-3 font-bold text-blue-700 bg-blue-50/25">${row.currSalesWan.toFixed(2)}</td>
+            <!-- GMV (亿元) & YoY - Centered -->
+            <td class="py-3.5 px-3 font-bold text-blue-700 bg-blue-50/25">${(row.currSalesWan / 10000).toFixed(3)}</td>
             <td class="py-3.5 px-3">${formatYoY(row.salesYoY)}</td>
             <!-- Share (%) - Centered -->
             <td class="py-3.5 px-3 font-bold text-purple-700 bg-purple-50/25">${row.currShare.toFixed(2)}%</td>
@@ -2844,13 +2844,13 @@
     function exportModule2Csv() {
       const stores = computeStoreAnalysis('m2');
       const { tierResults, totalRow } = computeTierAnalysis(stores);
-      const headers = ['排名梯队', '店铺数', '本期销额(万元)', '销额同比(%)', '本期额占比(%)', '同期额占比(%)', '占比变动(pp)', '本期销量(万件)', '销量同比(%)', '本期件单价(元)', '同期件单价(元)', '件单价同比(%)'];
+      const headers = ['排名梯队', '店铺数', '本期销额(亿元)', '销额同比(%)', '本期额占比(%)', '同期额占比(%)', '占比变动(pp)', '本期销量(万件)', '销量同比(%)', '本期件单价(元)', '同期件单价(元)', '件单价同比(%)'];
       
       const rows = [...tierResults, totalRow].map(t => [
         `"${t.tierName}"`,
         t.storeCount,
-        t.currSalesWan.toFixed(2),
-        t.salesYoY !== null ? t.salesYoY.toFixed(2) + '%' : '-',
+        (t.currSalesWan / 10000).toFixed(3),
+        t.salesYoY !== null ? t.salesYoY.toFixed(2) + '%' : '-', 
         t.currShare.toFixed(2) + '%',
         t.prevShare.toFixed(2) + '%',
         t.isTotal ? '-' : t.shareDiffPP.toFixed(2) + 'pp',
